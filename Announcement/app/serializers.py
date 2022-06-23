@@ -22,7 +22,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
         model = User
         # Перечислить все поля, которые могут быть включены в запрос
         # или ответ, включая поля, явно указанные выше.
-        fields = ['email', 'name', 'phone', 'password', 'login', 'tg', 'birth', 'token']
+        fields = ['email', 'name', 'phone', 'password', 'login', 'tg', 'birth', 'token', 'pk']
 
     def create(self, validated_data):
         # Использовать метод create_user, который мы
@@ -37,9 +37,10 @@ class LoginSerializer(serializers.Serializer):
     phone = serializers.CharField(max_length=12, read_only=True)
     tg = serializers.CharField(max_length=128, read_only=True)
     birth = serializers.DateField(read_only=True)
-
     password = serializers.CharField(max_length=128, write_only=True)
     token = serializers.CharField(max_length=255, read_only=True)
+    id = serializers.CharField(max_length=255, read_only=True)
+
 
     def validate(self, data):
         # В методе validate мы убеждаемся, что текущий экземпляр
@@ -91,5 +92,6 @@ class LoginSerializer(serializers.Serializer):
             'birth': user.birth,
             'phone': user.phone,
             'tg': user.tg,
+            'id': user.pk,
             'token': user.token
         }
