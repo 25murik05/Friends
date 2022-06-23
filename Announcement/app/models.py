@@ -55,7 +55,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     # который мы можем использовать для предоставления User в пользовательском
     # интерфейсе. Мы так же проиндексируем этот столбец в базе данных для
     # повышения скорости поиска в дальнейшем.
-    name = models.CharField(db_index=True, max_length=255, unique=True, null=True)
+    name = models.CharField(db_index=True, max_length=255, null=True)
 
     # Так же мы нуждаемся в поле, с помощью которого будем иметь возможность
     # связаться с пользователем и идентифицировать его при входе в систему.
