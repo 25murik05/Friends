@@ -1,6 +1,6 @@
 import jwt
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 
 from django.conf import settings
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager, PermissionsMixin)
@@ -28,6 +28,9 @@ class UserManager(BaseUserManager):
 
         if birth is None:
             raise TypeError('Users must have a birth.')
+
+        if((date.today() - birth).days < 6570):
+            raise TypeError('Underage users are not allowed to enter')
 
         user = self.model(login=login, name=name, phone=phone,
                           birth=birth, tg=tg, email=self.normalize_email(email),)

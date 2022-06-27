@@ -24,6 +24,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
         # или ответ, включая поля, явно указанные выше.
         fields = ['email', 'name', 'phone', 'password', 'login', 'tg', 'birth', 'token', 'pk']
 
+
     def create(self, validated_data):
         # Использовать метод create_user, который мы
         # написали ранее, для создания нового пользователя.
@@ -40,7 +41,6 @@ class LoginSerializer(serializers.Serializer):
     password = serializers.CharField(max_length=128, write_only=True)
     token = serializers.CharField(max_length=255, read_only=True)
     id = serializers.CharField(max_length=255, read_only=True)
-
 
     def validate(self, data):
         # В методе validate мы убеждаемся, что текущий экземпляр
@@ -86,12 +86,12 @@ class LoginSerializer(serializers.Serializer):
         # Метод validate должен возвращать словать проверенных данных. Это
         # данные, которые передются в т.ч. в методы create и update.
         return {
+            'id': user.pk,
             'email': user.email,
             'name': user.name,
             'login': user.login,
             'birth': user.birth,
             'phone': user.phone,
             'tg': user.tg,
-            'id': user.pk,
             'token': user.token
         }
